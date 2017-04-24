@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+language: java
+jdk: oraclejdk8
+
+after_success:
+    docker login u="$HEROKU_MAIL" -p="$HEROKU_API_KEY" registry.heroku.com
+    docker tag employees/sheltered-forest-41131 registry.heroku.com/sheltered-forest-41131
+    docker push registry.heroku.com/sheltered-forest-41131
