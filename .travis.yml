@@ -12,4 +12,4 @@ before_install:
 after_success:
   - docker build -t microservices/employees .
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push foreverdockerized/microservices
+  - docker push microservices/employees
