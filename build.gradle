@@ -13,7 +13,6 @@ apply plugin: 'org.springframework.boot'
 
 jar {
 	baseName = 'microsamples'
-	version = '0.1.0'
 }
 
 repositories {
