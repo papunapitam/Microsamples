@@ -1,0 +1,54 @@
+version: '2'
+services:
+
+  config:
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: pass123
+    build: config
+    restart: always
+    ports:
+      - 8888:8888
+
+  registry:
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: pass123
+    build: registry
+    restart: always
+#      - config
+#    depends_on:
+#      - config
+    ports:
+      - 8761:8761
+
+
+#  gateway:
+#    build: gateway
+#    restart: always
+#    links:
+#      - config
+#    depends_on:
+#      - config
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: pass123
+#
+#  employee-service:
+#    build: employee-service
+#    restart: always
+#    links:
+#      - config
+#    depends_on:
+#      - config
+#    ports:
+#      - 6000:6000
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: pass123
+
+#  monitoring:
+#    build: monitoring
+#    restart: always
+#    links:
+#      - config
+#    depends_on:
+#      - config
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD

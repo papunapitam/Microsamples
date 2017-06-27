@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: employee-service
+  cloud:
+    config:
+      uri: http://config:8888
+      fail-fast: true
+      username: user
+      password: pass123
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://registry:8761/eureka/
