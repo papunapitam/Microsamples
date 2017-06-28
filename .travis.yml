@@ -1,0 +1,47 @@
+sudo: required
+
+services:
+  - docker
+
+language: java
+jdk: oraclejdk8
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::7}
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+  #TAG
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+
+  # CONFIG SERVICE
+  - export CONFIG=foreverdockerized/microsamples-config
+  - docker build -t $CONFIG:$COMMIT ./config
+  - docker tag $CONFIG:$COMMIT $CONFIG:$TAG
+  - docker push $CONFIG
+
+  # REGISTRY
+  - export REGISTRY=foreverdockerized/microsamples-registry
+  - docker build -t $REGISTRY:$COMMIT ./registry
+  - docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
+  - docker push $REGISTRY
+
+  # GATEWAY
+  - export GATEWAY=foreverdockerized/microsamples-gateway
+  - docker build -t $GATEWAY:$COMMIT ./gateway
+  - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
+  - docker push $GATEWAY
+
+  # EMPLOYEE SERVICE
+  - export EMPLOYEE_SERVICE=foreverdockerized/microsamples-employee-service
+  - docker build -t EMPLOYEE_SERVICE:$COMMIT ./employee-service
+  - docker tag EMPLOYEE_SERVICE:$COMMIT EMPLOYEE_SERVICE:$TAG
+  - docker push EMPLOYEE_SERVICE
+
+  # MONITORING
+  - export MONITORING=foreverdockerized/microsamples-monitoring
+  - docker build -t $MONITORING:$COMMIT ./monitoring
+  - docker tag $MONITORING:$COMMIT $MONITORING:$TAG
+  - docker push $MONITORING
