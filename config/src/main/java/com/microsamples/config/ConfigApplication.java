@@ -36,6 +36,6 @@ class HelloworldController {
         response.put("greeting", greeting);
         response.put("version", version);
 
-        return response;
+        return response; 
     }
 }
